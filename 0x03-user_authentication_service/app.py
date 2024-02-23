@@ -52,17 +52,18 @@ def login() -> str:
         flask.abort(401)
 
 
-app.route('/sessions', methods=['DELETE'], strict_slashes=False)
+@app.route("/sessions", methods=["DELETE"], strict_slashes=False)
 def logout() -> str:
-    """ DELETE /sessions
+    """DELETE /sessions
+    Return:
+        - Redirects to home route.
     """
-    try:
-        session_id = flask.request.cookies.get("session_id")
-        user = AUTH.get_user_from_session_id(session_id)
-        AUTH.destroy_session(user.id)
-        return flask.redirect("/")
-    except Exception:
+    session_id = flask.request.cookies.get("session_id")
+    user = AUTH.get_user_from_session_id(session_id)
+    if user is None:
         flask.abort(403)
+    AUTH.destroy_session(user.id)
+    return flask.redirect("/")
 
 
 if __name__ == "__main__":
