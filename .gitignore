@@ -1,5 +1,5 @@
 __pyc*
 *.pyc
-*main*
+main_*
 __MA*
 *.db
