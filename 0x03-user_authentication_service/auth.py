@@ -2,6 +2,7 @@
 """ Auth
 """
 import bcrypt
+import uuid
 from db import DB
 from user import User
 
@@ -38,3 +39,17 @@ class Auth:
                                   user.hashed_password)
         except Exception:
             return False
+        
+    def _generte_uuid(self) -> str:
+        """ generate a uuid"""
+        return str(uuid.uuid4())
+    
+    def create_session(self, email: str) -> str:
+        """ create a session"""
+        try:
+            user = self._db.find_user_by(email=email)
+            session_id = self._generte_uuid()
+            self._db.update_user(user.id, session_id=session_id)
+            return session_id
+        except Exception:
+            return None
