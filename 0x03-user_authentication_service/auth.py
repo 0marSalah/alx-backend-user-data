@@ -9,7 +9,6 @@ from typing import Union
 from sqlalchemy.orm.exc import NoResultFound
 
 
-
 def _hash_password(password: str) -> bytes:
     ''' a function that hashes password'''
     salt = bcrypt.gensalt()
@@ -27,7 +26,6 @@ def _generte_uuid() -> str:
 class Auth:
     """Auth class to interact with the authentication database.
     """
-
     def __init__(self):
         self._db = DB()
 
@@ -68,3 +66,7 @@ class Auth:
         except NoResultFound:
             return None
 
+    def destroy_session(self, user_id: int) -> None:
+        """ destroy session"""
+        self._db.update_user(user_id, session_id=None)
+        return None
