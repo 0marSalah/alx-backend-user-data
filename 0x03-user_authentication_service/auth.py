@@ -15,6 +15,9 @@ def _hash_password(password: str) -> bytes:
     hashed_password = bcrypt.hashpw(passWord.encode('utf-8'), salt)
     return hashed_password
 
+def _generate_uuid() -> str:
+    ''' generates uuid and returns a string representation'''
+    return str(uuid.uuid4())
 
 class Auth:
     """Auth class to interact with the authentication database.
@@ -39,11 +42,7 @@ class Auth:
                                   user.hashed_password)
         except Exception:
             return False
-        
-    def _generte_uuid(self) -> str:
-        """ generate a uuid"""
-        return str(uuid.uuid4())
-    
+
     def create_session(self, email: str) -> str:
         """ create a session"""
         try:
