@@ -2,3 +2,4 @@ __pyc*
 *.pyc
 *main*
 __MA*
+*.db
